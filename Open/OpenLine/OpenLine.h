@@ -13,7 +13,7 @@
 #define LIGHTGREEN		10
 #define LIGHTCYAN		11
 #define LIGHTRED		12
-#define LIGHTMAGENTA	13
+#define LIGHTMAGENTA	1a
 #define YELLOW			14
 #define WHITE			15
 
@@ -93,19 +93,49 @@ namespace OpenLine {
 			SetConsoleTextAttribute(h, 9);
 			std::cout << "Output: \n";
 			std::cout << oper << "\n";
-			SetConsoleTextAttribute(h, GREEN);
+			SetConsoleTextAttribute(h, WHITE);
+		}
+		void Succes(std::string_view oper)
+		{
+			SetConsoleTextAttribute(h, WHITE);
+			std::cout << "Succes: " << oper << "\n";
+			SetConsoleTextAttribute(h, WHITE);
 		}
 		void Error(std::string_view oper)
 		{
 			SetConsoleTextAttribute(h, RED);
-			std::cout << "ERROR: \n";
+			std::cout << "ERROR: ";
 			std::cout << oper << "\n";
-			SetConsoleTextAttribute(h, GREEN);
+			SetConsoleTextAttribute(h, WHITE);
 		};
-		void print(auto prints)
+		void print(auto prints, auto a)
 		{
-			SetConsoleTextAttribute(h, BLUE);
-			std::cout << prints << "\n";
+			std::cout << prints << "    (" << a << ")" << "\n";
+		}
+		void cmds()
+		{
+			print(".youtube", "Opens youtube link");
+			print(".time", "shows the current time");
+			print(".info", "you just used this lol");
+			print(".notepad", "opens notepad");
+			print(".calc", "opens the calculator");
+			print(".sdown", "shutdowns the computer");
+			print(".exit", "exit out of the application");
+			print(" cls", "clears the console");
+			print(".cowsay", "use it to see what it does");
+			print(".cowsay.tux", "use it to see what it does");
+			print(".open.link", "opens the link you type");
+			print(".open.flink", "does the same as .open.link but you also need to add www and https");
+			print(".c.txt", "Creates a txt file");
+			print(".main.path", "opens the application path");
+			print(".rstart", "restarts the computer");
+			print(".ipc", "shows ip info");
+			print(".chmap", "char map");
+			print(".big.txt", "same as .c.txt but you can type enter");
+			print(".cr.dir", "creates a dir");
+			print(".del.file","deletes a file");
+			print(".dump","dumps all the text");
+			print(".open.path","opens path");
 		}
 	};
 };
