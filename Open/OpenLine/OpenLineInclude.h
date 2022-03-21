@@ -9,8 +9,12 @@
 #include <fstream>
 #include <string>
 #include <filesystem>
+#include <shellapi.h>
+#include <Lmcons.h>
+#include <direct.h>
 namespace fs = std::filesystem;
 	
 std::fstream file;
+std::ofstream file2;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
