@@ -1,7 +1,8 @@
 #pragma once
+// all the includes and stuff
 #include <iostream>
 #include <stdio.h>
-#include <windows.h>
+#include <Windows.h>
 #include <ctime>
 #include <algorithm>
 #include <string>
@@ -12,9 +13,12 @@
 #include <shellapi.h>
 #include <Lmcons.h>
 #include <direct.h>
-namespace fs = std::filesystem;
-	
-std::fstream file;
-std::ofstream file2;
+#include <stdio.h>
+#include <tchar.h>
 
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+#pragma comment(lib, "user32.lib")
+
+
+
+
