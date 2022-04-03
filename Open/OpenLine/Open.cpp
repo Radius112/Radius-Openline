@@ -7,6 +7,7 @@ std::string get_last_word(std::string s) {
 	std::replace(last_word.begin(), last_word.end(), '#', ' ');
 	return last_word;
 }
+
 int main()
 {  
     std::fstream file;
@@ -27,27 +28,28 @@ int main()
 	std::string cdpath;
 	while (input != "exit") {
 		time_t now = time(0);
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(h, LIGHTGREEN);
 		std::wcout << username;
 		SetConsoleTextAttribute(h, WHITE);
 		std::cout << ":";
 		SetConsoleTextAttribute(h, BLUE);
 		std::cout << "~";
-		if(cd)
+		if (cd)
 			std::cout << "/" << get_last_word(cdpath);
+
 		SetConsoleTextAttribute(h, WHITE);
 		std::cout << "-";
 		SetConsoleTextAttribute(h, BLUE);
-	
+
 		std::getline(std::cin, input);
 		SetConsoleTextAttribute(h, WHITE);
 		std::transform(input.begin(), input.end(), input.begin(), ::tolower);
 
 		STARTUPINFO startinfo = { 0 };
 		PROCESS_INFORMATION processinfo = { 0 };
-     
-		if      (input == "notepad") {
+
+		if (input == "notepad") {
 			system("notepad.exe");
 		}
 		else if (input == "cls" || input == "clear")
@@ -64,7 +66,7 @@ int main()
 		}
 		else if (input == ".cowsay")
 		{
-			
+
 			std::cout << "cowsay ";
 			std::string user;
 			std::getline(std::cin, user);
@@ -122,7 +124,7 @@ int main()
 		{
 			func.Link("youtube.com");
 		}
-		else if (input == ".ctxt")
+		else if (input == ".c.txt")
 		{
 			std::string yes_no;
 			std::string filename;
@@ -305,14 +307,61 @@ int main()
 				std::cout << "Enter file name:";
 
 			std::getline(std::cin, paths);
+
 			if (cd)
 			{
 				std::string a;
 				a += cdpath + "\\" + paths;
 				paths = a;
 			}
-
 			std::remove(paths.c_str());
+		}
+		else if (input == ".del.files")
+		{
+			std::string filecounts;
+			std::string paths;
+			std::ofstream(paths.c_str());
+			std::cout << "How many files? ";
+			std::getline(std::cin, filecounts);
+			int filecount = std::stoi(filecounts);
+			if (!cd) {
+				std::cout << "Enter path: ";
+				std::getline(std::cin, paths);
+				for (size_t i = 0; i < filecount; i++)
+				{
+					std::string delfilename;
+					std::cout << "enter file name: ";
+					std::getline(std::cin, delfilename);
+					paths += "\\" + delfilename;
+					std::cout << paths << "\n";
+					std::remove(paths.c_str());
+
+					const auto pos = paths.find_last_of("\\");
+					paths = paths.substr(0, pos);
+					sqrt(10);
+				}
+			}
+
+			if (cd)
+			{
+				std::string a;
+				a += cdpath + "\\" + paths;
+				paths = a;
+
+				for (size_t i = 0; i < filecount; i++)
+				{
+					std::string delfilename;
+					std::cout << "enter file name: ";
+					std::getline(std::cin, delfilename);
+					paths += "\\" + delfilename;
+					std::cout << paths << "\n";
+					std::remove(paths.c_str());
+
+					const auto pos = paths.find_last_of("\\");
+					paths = paths.substr(0, pos);
+				}
+			}
+
 		}
 		else if (input == ".cr.dir")
 		{
@@ -501,49 +550,151 @@ int main()
 		else if (input == ".cd")
 		{
 			std::string path;
+			std::cout << "will not check if its a valid path\n";
+			std::cout << "Enter a path: ";
 			std::getline(std::cin, cdpath);
 			cd = true;
-			if (cdpath == "exit.cd")
-			{
+			if (cdpath == "exit.cd") {
 				cd = false;
+				cdpath = "";
 			}
 		}
 		else if (input == ".cd/")
 		{
-			cdpath = fs::current_path().root_path().string();
-			while (cdpath.find("\"") != std::string::npos)
-				cdpath.replace(cdpath.find("\""), 3, " ");
-			cd = true;
+			if (cd) {
+				cdpath = fs::current_path().root_path().string();
+				while (cdpath.find("\"") != std::string::npos)
+					cdpath.replace(cdpath.find("\""), 3, " ");
+			}
 		}
 		else if (input == ".cd.")
 		{
-			const auto pos = cdpath.find_last_of("\\");
-			cdpath = cdpath.substr(0, pos);
-			std::cout << cdpath << "\n";
+			if (cd) {
+				const auto pos = cdpath.find_last_of("\\");
+				cdpath = cdpath.substr(0, pos);
+				std::cout << cdpath << "\n";
+			}
 		}
 		else if (input == ".cd./")
-        {
+		{
 			if (cd) {
 				std::string add;
 				std::cout << "what file?: ";
 				std::getline(std::cin, add);
 				cdpath += "\\" + add;
 			}
-        }
+		}
+		else if (input == ".cd/d")
+		{
+			cdpath = fs::current_path().root_path().string();
+			while (cdpath.find("\"") != std::string::npos)
+				cdpath.replace(cdpath.find("\""), 3, " ");
+			std::wstring a = username;
+			std::wcout << username << "\n";
+			std::string usernamestring(a.begin(), a.end());
+			cdpath += "\\Users\\";
+			cdpath += usernamestring;
+			cdpath += "\\Downloads";
+			cd = true;
+		}
 		else if (input == ".beep")
-        {
-	     	std::string dur;
+		{
+			std::string dur;
 			std::string freq;
 			double durc;
-		    double freqc;
-			std::cout << "(in ther range of 37 trough 32.767)freq: ";
+			double freqc;
+			std::cout << "(in the range of 37 trough 32.767)freq: ";
 			std::getline(std::cin, freq);
 			std::cout << "(seconds)dur: ";
 			std::getline(std::cin, dur);
-			durc  = stoi(dur);
+			durc = stoi(dur);
 			durc *= 1000;
 			freqc = stoi(freq);
 			Beep(freqc, durc);
-        }
+		}
+		else if (input == ".c.file")
+		{
+			std::string yes_no;
+			std::string filename;
+			std::string text;
+			if (cd)
+				std::cout << "Enter file name: ";
+			else
+				std::cout << "Enter filepath: ";
+
+			std::getline(std::cin, filename);
+			if (cd)
+			{
+				std::string a;
+				a += cdpath + "\\" + filename;
+				filename = a;
+			}
+
+			std::cout << "type \\n for a new line\n";
+			std::getline(std::cin, text);
+			file.open(filename, std::ios::out);
+			if (file.is_open())
+			{
+				file << text;
+				file.close();
+			}
+			std::cout << "File is at " << filename << "\n";
+			std::cout << "Do you want to open the file? [Y/N]\n";
+			std::getline(std::cin, yes_no);
+			std::transform(yes_no.begin(), yes_no.end(), yes_no.end(), ::tolower);
+			if (yes_no == "y")
+			{
+				ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+			}
+		}
+		else if (input == ".c.txts")
+		{
+			std::string yes_no;
+			std::string filename;
+			std::string text;
+			std::string files;
+			int filecount;
+			std::cout << "How many txt files do you want to create?: ";
+			std::getline(std::cin, files);
+			filecount = std::stoi(files);
+			for (size_t i = 0; i < filecount; i++) {
+				std::cout << "Enter file name: ";
+				std::getline(std::cin, filename);
+				if (cd)
+				{
+					std::string a;
+					a += cdpath + "\\" + filename;
+					filename = a;
+				}
+				if (filename.find(".txt") != std::string::npos)
+				{
+					func.Succes("Created txt");
+				}
+				else
+				{
+					filename += ".txt";
+				}
+				std::cout << "type \\n for a new line\n";
+				std::getline(std::cin, text);
+				file.open(filename, std::ios::out);
+				if (file.is_open())
+				{
+					file << text;
+					file.close();
+				}
+
+			}
+		
+		}
+		else if (input ==  "")	
+		{
+			
+		}
+		else
+		{
+			std::cout << "\"" << input << "\"" 
+				<< " is not recognized" 
+				<< " as a command" << "\n";
+		}
     }
 }	
