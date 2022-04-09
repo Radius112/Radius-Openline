@@ -338,7 +338,6 @@ int main()
 
 					const auto pos = paths.find_last_of("\\");
 					paths = paths.substr(0, pos);
-					sqrt(10);
 				}
 			}
 
